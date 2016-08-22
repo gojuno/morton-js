@@ -1,0 +1,25 @@
+{
+    "name": "morton",
+    "version": "1.0.0",
+    "description": "Morton Pack/Unpack Library",
+    "main": "index.js",
+    "scripts": {
+        "test": "node test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/gojuno/morton-js.git"
+    },
+    "author": "Andrew Kirilenko <iced@gojuno.com>",
+    "license": "BSD-3-Clause",
+    "bugs": {
+        "url": "https://github.com/gojuno/morton-js/issues"
+    },
+    "homepage": "https://github.com/gojuno/morton-js#readme",
+    "dependencies": {
+        "long": "^3.*"
+    },
+    "devDependencies": {
+        "tape": "^4.6.0"
+    }
+}
