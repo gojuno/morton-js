@@ -1,1 +1,11 @@
 * Morton Pack/Unpack Library
+** Basics
+Check [[https://en.wikipedia.org/wiki/Z-order_curve][wikipedia]] for details.
+** Example
+#+BEGIN_SRC java
+var Morton64 = require("morton");
+
+var m = new Morton64(2, 32); // 2 dimenstions 32 bits each
+var code = m.pack([13, 42]); // pack two values, returns Long
+var values = m.unpack(code); // should get back 13 and 42 (as Long)
+#+END_SRC
