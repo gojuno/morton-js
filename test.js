@@ -2,6 +2,75 @@ var Test = require("tape");
 var Long = require("long");
 var Morton64 = require("./");
 
+function doTestBadMake64(t, dimensions, bits) {
+  try {
+    new Morton64(dimensions, bits);
+  }
+  catch (err) {
+    t.ok(true);
+    return;
+  }
+  t.fail();
+}
+
+Test('badMake64', function(t) {
+  doTestBadMake64(t, 0, 1);
+  doTestBadMake64(t, 1, 0);
+  doTestBadMake64(t, 1, 65);
+
+  t.end();
+});
+
+function doTestValueBoundaries(t, dimensions, bits, value) {
+  var m = new Morton64(dimensions, bits);
+  var values = [];
+  for (var i = 0; i < values.length; i++) {
+    values[i] = 0;
+  }
+  values[0] = value;
+  try {
+    m.pack(values);
+  }
+  catch (err) {
+    t.ok(true);
+    return;
+  }
+  t.fail();
+}
+
+Test('valueBoundaries', function(t) {
+  doTestValueBoundaries(t, 2, 1, 2);
+  doTestValueBoundaries(t, 16, 4, 16);
+
+  t.end();
+});
+
+function doTestSValueBoundaries(t, dimensions, bits, value) {
+  var m = new Morton64(dimensions, bits);
+  var values = [];
+  for (var i = 0; i < values.length; i++) {
+    values[i] = 0;
+  }
+  values[0] = value;
+  try {
+    m.spack(values);
+  }
+  catch (err) {
+    t.ok(true);
+    return;
+  }
+  t.fail();
+}
+
+Test('sValueBoundaries', function(t) {
+  doTestSValueBoundaries(t, 2, 2, 2);
+  doTestSValueBoundaries(t, 2, 2, -2);
+  doTestSValueBoundaries(t, 16, 4, 8);
+  doTestSValueBoundaries(t, 16, 4, -8);
+
+  t.end();
+});
+
 function doTestPackUnpack(t, dimensions, bits, values) {
   for (var i = 0; i < values.length; i++) {
     if (!Long.isLong(values[i])) {
@@ -108,6 +177,29 @@ Test('sPackUnpack', function(t) {
     values.push(1 - 2 * (i % 2));
   }
   doTestSPackUnpack(t, 32, 2, values);
+
+  t.end();
+});
+
+function doTestPackArrayDimensions(t, dimensions, bits, size) {
+  var m = new Morton64(dimensions, bits);
+  var values = [];
+  for (var i = 0; i < size; i++) {
+    values[i] = 0;
+  }
+  try {
+    m.pack(values);
+  }
+  catch (err) {
+    t.ok(true);
+    return;
+  }
+  t.fail();
+}
+
+Test('testPackArrayDimensions', function(t) {
+  doTestPackArrayDimensions(t, 2, 32, 3);
+  doTestPackArrayDimensions(t, 2, 32, 1);
 
   t.end();
 });
