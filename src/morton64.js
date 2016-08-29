@@ -8,7 +8,7 @@
   }
 })(this, function() {
            var Long = require("long");
-           var sprintf = require("sprintf-js");
+           var sprintf = require("sprintf-js").sprintf;
 
            function Morton64(dimensions, bits) {
              if (dimensions <= 0 || bits <= 0 || dimensions * bits > 64) {
