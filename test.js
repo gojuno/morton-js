@@ -47,3 +47,67 @@ Test('packUnpack', function(t) {
 
   t.end();
 });
+
+function doTestSPackUnpack(t, dimensions, bits, values) {
+  for (var i = 0; i < values.length; i++) {
+    if (!Long.isLong(values[i])) {
+      values[i] = Long.fromInt(values[i]);
+    }
+  }
+
+  var m = new Morton64(dimensions, bits);
+  var code = m.spack(values);
+  var unpacked = m.sunpack(code);
+  t.equals(unpacked.toString(), values.toString());
+}
+
+Test('sPackUnpack', function(t) {
+  doTestSPackUnpack(t, 2, 32, [1, 2]);
+  doTestSPackUnpack(t, 2, 32, [2, 1]);
+  doTestSPackUnpack(t, 2, 32, [Long.ONE.shl(31).sub(1), Long.ONE.shl(31).sub(1)]);
+  doTestSPackUnpack(t, 2, 2, [1, 1]);
+  doTestSPackUnpack(t, 2, 32, [-1, -2]);
+  doTestSPackUnpack(t, 2, 32, [-2, -1]);
+  doTestSPackUnpack(t, 2, 32, [Long.ONE.shl(31).sub(1).negate(), Long.ONE.shl(31).sub(1).negate()]);
+  doTestSPackUnpack(t, 2, 2, [-1, -1]);
+
+  doTestSPackUnpack(t, 3, 21, [1, 2, 4]);
+  doTestSPackUnpack(t, 3, 21, [4, 2, 1]);
+  doTestSPackUnpack(t, 3, 21, [Long.ONE.shl(20).sub(1), Long.ONE.shl(20).sub(1), Long.ONE.shl(20).sub(1)]);
+  doTestSPackUnpack(t, 3, 2, [1, 1, 1]);
+  doTestSPackUnpack(t, 3, 21, [-1, -2, -4]);
+  doTestSPackUnpack(t, 3, 21, [-4, -2, -1]);
+  doTestSPackUnpack(t, 3, 21, [Long.ONE.shl(20).sub(1).negate(), Long.ONE.shl(20).sub(1).negate(), Long.ONE.shl(20).sub(1).negate()]);
+  doTestSPackUnpack(t, 3, 2, [-1, -1, -1]);
+
+  doTestSPackUnpack(t, 4, 16, [1, 2, 4, 8]);
+  doTestSPackUnpack(t, 4, 16, [8, 4, 2, 1]);
+  doTestSPackUnpack(t, 4, 16, [Long.ONE.shl(15).sub(1), Long.ONE.shl(15).sub(1), Long.ONE.shl(15).sub(1), Long.ONE.shl(15).sub(1)]);
+  doTestSPackUnpack(t, 4, 2, [1, 1, 1, 1]);
+  doTestSPackUnpack(t, 4, 16, [-1, -2, -4, -8]);
+  doTestSPackUnpack(t, 4, 16, [-8, -4, -2, -1]);
+  doTestSPackUnpack(t, 4, 16, [Long.ONE.shl(15).sub(1).negate(), Long.ONE.shl(15).sub(1).negate(), Long.ONE.shl(15).sub(1).negate(), Long.ONE.shl(15).sub(1).negate()]);
+  doTestSPackUnpack(t, 4, 2, [-1, -1, -1, -1]);
+
+  doTestSPackUnpack(t, 6, 10, [1, 2, 4, 8, 16, 32]);
+  doTestSPackUnpack(t, 6, 10, [32, 16, 8, 4, 2, 1]);
+  doTestSPackUnpack(t, 6, 10, [511, 511, 511, 511, 511, 511]);
+  doTestSPackUnpack(t, 6, 10, [-1, -2, -4, -8, -16, -32]);
+  doTestSPackUnpack(t, 6, 10, [-32, -16, -8, -4, -2, -1]);
+  doTestSPackUnpack(t, 6, 10, [-511, -511, -511, -511, -511, -511]);
+
+  doTestSPackUnpack(t, 6, 10, [1, 2, 4, 8, 16, 32]);
+  doTestSPackUnpack(t, 6, 10, [32, 16, 8, 4, 2, 1]);
+  doTestSPackUnpack(t, 6, 10, [511, 511, 511, 511, 511, 511]);
+  doTestSPackUnpack(t, 6, 10, [-1, -2, -4, -8, -16, -32]);
+  doTestSPackUnpack(t, 6, 10, [-32, -16, -8, -4, -2, -1]);
+  doTestSPackUnpack(t, 6, 10, [-511, -511, -511, -511, -511, -511]);
+
+  var values = [];
+  for (var i = 0; i < 32; i++) {
+    values.push(1 - 2 * (i % 2));
+  }
+  doTestSPackUnpack(t, 32, 2, values);
+
+  t.end();
+});

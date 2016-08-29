@@ -64,12 +64,44 @@
              return code;
            }
 
+           Morton64.prototype.spack = function(values) {
+             var uvalues = [];
+             for (var i = 0; i < values.length; i++) {
+               uvalues.push(this.shiftSign(values[i]));
+             }
+             return this.pack(uvalues);
+           }
+
            Morton64.prototype.unpack = function(code) {
              var values = [];
              for (var i = 0; i < this.dimensions; i++) {
                values[i] = this.compact(code.shru(i));
              }
              return values;
+           }
+
+           Morton64.prototype.sunpack = function(code) {
+             var values = this.unpack(code);
+             for (var i = 0; i < values.length; i++) {
+               values[i] = this.unshiftSign(values[i]);
+             }
+             return values;
+           }
+
+           Morton64.prototype.shiftSign = function(value) {
+             if (value.lessThan(0)) {
+               value = value.negate().or(Long.ONE.shl(this.bits - 1));
+             }
+             return value;
+           }
+
+           Morton64.prototype.unshiftSign = function(value) {
+             var sign = value.and(Long.ONE.shl(this.bits - 1));
+             value = value.and(Long.ONE.shl(this.bits - 1).sub(1));
+             if (!sign.equals(0)) {
+               value = value.negate();
+             }
+             return value;
            }
 
            Morton64.prototype.split = function(value) {
