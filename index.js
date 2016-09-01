@@ -1,1 +1,0 @@
-module.exports = require("./src/morton64.js");

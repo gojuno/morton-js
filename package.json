@@ -1,26 +1,30 @@
 {
-    "name": "morton",
-    "version": "1.0.0",
-    "description": "Morton Pack/Unpack Library",
-    "main": "index.js",
-    "scripts": {
-        "test": "node test"
-    },
-    "repository": {
-      "type": "git",
-        "url": "git+ssh://git@github.com/gojuno/morton-js.git"
-    },
-    "author": "Andrew Kirilenko <iced@gojuno.com>",
-    "license": "BSD-3-Clause",
-    "bugs": {
-        "url": "https://github.com/gojuno/morton-js/issues"
-    },
-    "homepage": "https://github.com/gojuno/morton-js#readme",
-    "dependencies": {
-        "long": "^3.*",
-        "sprintf-js": "^1.*"
-    },
-    "devDependencies": {
-        "tape": "^4.*"
-    }
+  "name": "morton64",
+  "version": "1.0.1",
+  "description": "Morton Pack/Unpack Library",
+  "keywords": [
+    "morton",
+    "z-order"
+  ],
+  "author": "Andrew Kirilenko <iced@gojuno.com>",
+  "license": "BSD-3-Clause",
+  "bugs": "https://github.com/gojuno/morton-js/issues",
+  "homepage": "https://github.com/gojuno/morton-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gojuno/morton-js.git"
+  },
+  "main": "dist/morton64.min.js",
+  "scripts": {
+    "test": "node test",
+    "release": "make all & node test"
+  },
+  "dependencies": {
+    "long": "^3.*",
+    "sprintf-js": "^1.*"
+  },
+  "devDependencies": {
+    "tape": "^4.*",
+    "uglify-js": "^2.7.3"
+  }
 }

@@ -1,0 +1,7 @@
+node_modules
+.tern*
+.idea
+.npm-debug.log
+Makefile
+test.js
+src

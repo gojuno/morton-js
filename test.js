@@ -1,6 +1,6 @@
 var Test = require("tape");
 var Long = require("long");
-var Morton64 = require("./");
+var Morton64 = require("./dist/morton64");
 
 function doTestBadMake64(t, dimensions, bits) {
   try {
